@@ -10,7 +10,7 @@ def bot_login():
     return r
 
 def run_bot(r):
-    for comment in r.subreddit('LSD').comments(limit = 50):
+    for comment in r.subreddit('test').comments(limit = 50):
         if "lsd" in comment.body:
             print ("String Found!")
 
