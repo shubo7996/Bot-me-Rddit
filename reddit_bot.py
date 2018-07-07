@@ -1,6 +1,7 @@
 import praw
 import config
 import time
+import os
 
 def bot_login():
     print ("logging in!")
@@ -24,13 +25,20 @@ def run_bot(r , comments_replied_to):
             print ("Replied to comment " + comment.id)
 
             comments_replied_to.append(comment.id)
+
+            with open("comments_replied_to.txt", "a") as f:
+                f.write(comment.id + "\n")
+                
     print ("sleeping for 10 seconds...")
     time.sleep(10)
 
 def get_saved_comments():
-    with open("comments_replied_to.txt", "r") as f:
-        comments_replied_to = f.read()
-        comments_replied_to = comments_replied_to.split("\n")
+    if not os.path.isfile("comments_replied_to.txt"):
+        comments_replied_to = []
+    else:
+        with open("comments_replied_to.txt", "r") as f:
+            comments_replied_to = f.read()
+            comments_replied_to = comments_replied_to.split("\n")
 
     return comments_replied_to
 
